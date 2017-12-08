@@ -1,0 +1,18 @@
+{
+"extensions":
+  [
+    {
+    "builtin": "False",
+    "enable": "True",
+    "type": "extension",
+    "name": "pyRevitBCJdt",
+    "description": "Custom tools for Bohlin Cywinski Jackson",
+    "author": "BCJ DesignTech Group",
+    "author-url": "https://github.com/BohlinCywinskiJackson",
+    "url": "",
+    "website": "http://www.bcj.com",
+    "image": "",
+    "dependencies": []
+    }
+  ]
+}
