@@ -6,11 +6,16 @@ BCJdt - Bohlin Cywinski Jackson designtech
 __doc__ = 'This tool is to align a section or elevation to a wall. Run this tool in a Plan view.' \
           ' Pick the view to align, then pick the wall to align to.'
 
-from revitutils import doc, uidoc, selection
-
 from Autodesk.Revit.DB import Transaction, FilteredElementCollector, View, ViewSection, Wall, XYZ, Line, Curve, ElementTransformUtils
 from Autodesk.Revit.UI import TaskDialog
 from Autodesk.Revit.UI.Selection import ObjectType
+
+try:
+    from revitutils import doc, uidoc, selection
+except:
+    from pyrevit import revit
+    uidoc = revit.uidoc
+    doc = revit.doc
 
 from math import pi as PI
 

@@ -5,7 +5,13 @@
 Toggles visibility of Detail Sheet Framework Annotation Symbol in Current View
 """
 
-from revitutils import doc, uidoc
+try:
+    from revitutils import doc, uidoc
+except:
+    from pyrevit import revit
+    doc = revit.doc
+    uidoc = revit.uidoc
+
 from Autodesk.Revit.DB import Transaction, View, BuiltInCategory
 
 # activate the show hidden so we can collect all elements (visible and hidden)
