@@ -1,9 +1,9 @@
 # BCJdt - Bohlin Cywinski Jackson designtech
 # Copyright(c) 2018
 # Author: Jon Szczesniak - @jonszcz
-"""
-Toggles the side of a Grid or Level bubble in the active view based on the current selection
-"""
+'''
+Select one or several Grids and/or Levels. Clicking the button will swap the grid or level bubble to the opposite side of the element.
+'''
 # Import necessary classes
 from rpw import revit, db, ui
 from Autodesk.Revit.DB import DatumEnds
