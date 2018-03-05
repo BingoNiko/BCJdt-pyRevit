@@ -6,7 +6,9 @@ BCJdt - Bohlin Cywinski Jackson designtech
 __doc__ = 'Reload the keynote file'
 
 from Autodesk.Revit.DB import Transaction, KeynoteTable
-from revitutils import doc
+from pyrevit import revit
+
+doc = revit.doc
 
 t = Transaction(doc, 'Reload Keynote File')
 t.Start()
