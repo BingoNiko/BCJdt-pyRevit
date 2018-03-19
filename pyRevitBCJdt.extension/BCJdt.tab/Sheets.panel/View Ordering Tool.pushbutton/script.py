@@ -17,40 +17,41 @@ See this link for a copy of the GNU General Public License protecting this packa
 https://github.com/eirannejad/pyRevit/blob/master/LICENSE
 """
 
-__doc__ = 'Run this tool in a sheet view and click on viewports one by one and this tool ' \
-          'will change the detail number sequencially.'
+from pyrevit import revit, DB, UI
+from pyrevit import forms
 
-__window__.Hide()
-from Autodesk.Revit.DB import Transaction, ViewSheet, Viewport
-from Autodesk.Revit.UI import TaskDialog
-from Autodesk.Revit.UI.Selection import ObjectType
 
-uidoc = __revit__.ActiveUIDocument
-doc = __revit__.ActiveUIDocument.Document
-curview = doc.ActiveView
+__doc__ = 'Run this tool in a sheet view and click on viewports one '\
+          'by one and this tool will change the detail number sequencially.'
 
-if not isinstance(curview, ViewSheet):
-    TaskDialog.Show('pyrevit', 'You must be on a sheet to use this tool.')
-    __window__.Close()
+
+curview = revit.activeview
+
+if not isinstance(curview, DB.ViewSheet):
+    forms.alert('You must be on a sheet to use this tool.')
 
 viewports = []
 for vpId in curview.GetAllViewports():
-    viewports.append(doc.GetElement(vpId))
+    viewports.append(revit.doc.GetElement(vpId))
 
-vports = {int(vp.LookupParameter('Detail Number').AsString()): vp for vp in viewports if
-          vp.LookupParameter('Detail Number')}
+vports = {int(vp.LookupParameter('Detail Number').AsString()): vp
+          for vp in viewports if vp.LookupParameter('Detail Number')}
+
 maxNum = max(vports.keys())
 
-with Transaction(doc, 'Re-number Viewports') as t:
-    t.Start()
-
+with revit.Transaction('Re-number Viewports'):
     sel = []
     while len(sel) < len(vports):
         try:
-            el = doc.GetElement(uidoc.Selection.PickObject(ObjectType.Element))
-            if isinstance(el, Viewport):
-                sel.append(doc.GetElement(el.ViewId))
-        except:
+            el = revit.doc.GetElement(
+                revit.uidoc.Selection.PickObject(
+                    UI.Selection.ObjectType.Element
+                    )
+                )
+
+            if isinstance(el, DB.Viewport):
+                sel.append(revit.doc.GetElement(el.ViewId))
+        except Exception:
             break
 
     for i in range(1, len(sel) + 1):
@@ -61,7 +62,3 @@ with Transaction(doc, 'Re-number Viewports') as t:
 
     for i, el in enumerate(sel):
         el.LookupParameter('Detail Number').Set(str(i + 1))
-
-    t.Commit()
-
-__window__.Close()
