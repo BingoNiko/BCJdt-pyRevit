@@ -3,5 +3,12 @@
 __context__ = 'zerodoc'
 
 
-from scriptutils import open_url
-open_url('http://bcj.slack.com')
+#old non-functioning code
+# from scriptutils import open_url
+#open_url('http://bcj.slack.com')
+
+import webbrowser
+
+url = 'http://bcj.slack.com'
+
+webbrowser.open_new(url)
