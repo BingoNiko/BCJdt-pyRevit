@@ -13,6 +13,20 @@
     "website": "http://www.bcj.com",
     "image": "",
     "dependencies": []
+    },
+    {
+    "builtin": "False",
+    "enable": "True",
+    "type": "extension",
+    "name": "BCJdt_beta",
+    "authusers": ["jszczesniak", "dt-admin", "mkarp"],
+    "description": "BCJdt WIP Tools",
+    "author": "BCJ DesignTech Group",
+    "author-url": "https://github.com/BohlinCywinskiJackson",
+    "url": "",
+    "website": "http://www.bcj.com",
+    "image": "",
+    "dependencies": []
     }
   ]
 }
