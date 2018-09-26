@@ -1,7 +1,9 @@
-"""Opens the current BCJ Detail Component library location."""
+"""Opens the current BCJ Revit Detail Component library location."""
 
 __context__ = 'zerodoc'
 
+from pyrevit import coreutils
 
-from scriptutils import open_url
-open_url('L:/\+Revit/2 Detail Components/2017')
+
+component_folder = 'L:/+Revit/2 Detail Components/'
+coreutils.open_folder_in_explorer(component_folder)

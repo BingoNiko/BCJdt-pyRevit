@@ -7,9 +7,12 @@ __doc__ = 'This tool will isolate any walls that have painted faces'
 
 import System
 from System.Collections.Generic import *
-from revitutils import doc, uidoc, selection
+# from revitutils import doc, uidoc, selection
 from Autodesk.Revit.DB import *
+from pyrevit import revit
 
+doc = revit.doc
+uidoc = revit.uidoc
 elements = []
 view = uidoc.ActiveView
 painted = []

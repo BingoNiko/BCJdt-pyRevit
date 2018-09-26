@@ -2,6 +2,8 @@
 
 __context__ = 'zerodoc'
 
+from pyrevit import coreutils
 
-from scriptutils import open_url
-open_url('L:/\+Revit')
+
+revit_folder = 'L:/+Revit'
+coreutils.open_folder_in_explorer(revit_folder)

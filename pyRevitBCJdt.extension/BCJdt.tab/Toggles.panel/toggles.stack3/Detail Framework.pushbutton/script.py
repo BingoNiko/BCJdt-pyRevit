@@ -5,39 +5,37 @@
 Toggles visibility of Detail Sheet Framework Annotation Symbol in Current View
 """
 
-try:
-    from revitutils import doc, uidoc
-except:
-    from pyrevit import revit
-    doc = revit.doc
-    uidoc = revit.uidoc
-
+from pyrevit import revit
 from Autodesk.Revit.DB import Transaction, View, BuiltInCategory
+
+doc = revit.doc
+uidoc = revit.uidoc
 
 # activate the show hidden so we can collect all elements (visible and hidden)
 activeview = uidoc.ActiveView
 # FIXME: Would like the option of using the current sheet or all the sheets
 
-# define a transaction variable and describe the transaction
-t = Transaction(doc, 'Toggle Detail Framework')
-
-# start a transaction in the Revit database
-t.Start()
-
-# If the Detail Sheet Framework Generic Annotation subcategory is shown
-# Then turn it off. If it's hidden, then turn it on.
-
 GA = doc.Settings.Categories.get_Item(BuiltInCategory.OST_GenericAnnotation)
 subcat = GA.SubCategories
 
+# Preset id to compare to after going through the subcategories.
+id = 0
+
 for sub in subcat:
     if sub.Name == "Detail Sheet Framework":
-        i = (sub.Id)
+        id = sub.Id
 
-if View.GetCategoryHidden(activeview, i):
-    View.SetCategoryHidden(activeview, i, False)
-else:
-    View.SetCategoryHidden(activeview, i, True)
+# TODO: How do you add an output to break and warn if the framework isn't loaded? Currently handled with comparing the id to a preset value.
 
-# commit the transaction to the Revit database
-t.Commit()
+with Transaction(doc, 'Toggle Detail Framework') as t:
+    t.Start()
+
+    if id == 0:
+        print("Detail Framework isn't loaded into the project.")
+        # TODO: Give a better output window rather than a print dialog.
+    elif View.GetCategoryHidden(activeview, id):
+        View.SetCategoryHidden(activeview, id, False)
+    else:
+        View.SetCategoryHidden(activeview, id, True)
+
+    t.Commit()
