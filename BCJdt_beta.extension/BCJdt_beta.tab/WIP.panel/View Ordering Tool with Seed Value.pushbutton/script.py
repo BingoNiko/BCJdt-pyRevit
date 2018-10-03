@@ -16,7 +16,9 @@ viewports = []
 for vpId in curview.GetAllViewports():
     viewports.append(revit.doc.GetElement(vpId))
 
-vports = {int(vp.LookupParameter('Detail Number').AsString()): vp
+# TODO: Exclude legends.
+# Can you give a warning if you are trying to renumber a legend?
+vports = {(vp.LookupParameter('Detail Number').AsString()): vp
           for vp in viewports if vp.LookupParameter('Detail Number')}
 
 maxNum = max(vports.keys())
